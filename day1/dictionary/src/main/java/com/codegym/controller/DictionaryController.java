@@ -1,2 +1,4 @@
-package com.codegym.controller;public class DictionaryController {
+package com.codegym.controller;
+
+public class DictionaryController {
 }
