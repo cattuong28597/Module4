@@ -24,7 +24,7 @@ public class UserDao {
         u2.setName("Bill");
         u2.setAccount("bill");
         u2.setEmail("bill@codegym.vn");
-        u2.setPassword("123456");
+        u2.setPassword("213456");
         users.add(u2);
 
         User u3 = new User();
@@ -32,7 +32,7 @@ public class UserDao {
         u3.setName("Mike");
         u3.setAccount("mike");
         u2.setEmail("mike@codegym.vn");
-        u3.setPassword("123456");
+        u3.setPassword("124356");
         users.add(u3);
     }
 
