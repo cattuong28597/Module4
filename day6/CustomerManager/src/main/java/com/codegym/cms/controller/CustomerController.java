@@ -1,7 +1,9 @@
 package com.codegym.cms.controller;
 
 import com.codegym.cms.model.Customer;
+import com.codegym.cms.model.Province;
 import com.codegym.cms.service.ICustomerService;
+import com.codegym.cms.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CustomerController {
@@ -18,10 +21,22 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
+    @Autowired
+    private IProvinceService provinceService;
+
+    @ModelAttribute("provinces")
+    public Iterable<Province> provinces() {
+        return provinceService.findAll();
+    }
+
     @GetMapping("/create-customer")
     public ModelAndView showCreateForm() {
         ModelAndView modelAndView = new ModelAndView("/customer/create");
+
+//        Iterable<Province> provinces = provinceService.findAll();
+
         modelAndView.addObject("customer", new Customer());
+//        modelAndView.addObject("provinces", provinces);
         modelAndView.addObject("message", null);
         return modelAndView;
     }
@@ -37,7 +52,7 @@ public class CustomerController {
 
     @GetMapping("/customers")
     public ModelAndView listCustomer() {
-        List<Customer> customers = customerService.findAll();
+        Iterable<Customer> customers = customerService.findAll();
         ModelAndView modelAndView = new ModelAndView("/customer/list");
         modelAndView.addObject("customers", customers);
         return modelAndView;
@@ -45,10 +60,10 @@ public class CustomerController {
 
     @GetMapping("/edit-customer/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
-        Customer customer = customerService.findById(id);
-        if (customer != null) {
+        Optional<Customer> customer = customerService.findById(id);
+        if (customer.isPresent() ) {
             ModelAndView modelAndView = new ModelAndView("/customer/edit");
-            modelAndView.addObject("customer", customer);
+            modelAndView.addObject("customer", customer.get());
             return modelAndView;
 
         } else {
@@ -64,14 +79,15 @@ public class CustomerController {
         modelAndView.addObject("customer", customer);
         modelAndView.addObject("message", "Customer update successfully");
         return modelAndView;
+
     }
 
     @GetMapping("/delete-customer/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
-        Customer customer = customerService.findById(id);
-        if (customer != null) {
+        Optional<Customer> customer = customerService.findById(id);
+        if (customer.isPresent()) {
             ModelAndView modelAndView = new ModelAndView("/customer/delete");
-            modelAndView.addObject("customer", customer);
+            modelAndView.addObject("customer", customer.get());
             return modelAndView;
 
         } else {
