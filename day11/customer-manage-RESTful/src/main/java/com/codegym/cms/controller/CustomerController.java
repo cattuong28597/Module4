@@ -41,11 +41,23 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.save(customer), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+//        Optional<Customer> customerOptional = customerService.findById(id);
+//        if (!customerOptional.isPresent()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        customer.setId(customerOptional.get().getId());
+//        return new ResponseEntity<>(customerService.save(customer), HttpStatus.OK);
+//    }
+
+    @PutMapping
+    public ResponseEntity<Customer> updateCustomerV2(@RequestBody Customer customer) {
+        Long id = customer.getId();
         Optional<Customer> customerOptional = customerService.findById(id);
         if (!customerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         }
         customer.setId(customerOptional.get().getId());
         return new ResponseEntity<>(customerService.save(customer), HttpStatus.OK);
