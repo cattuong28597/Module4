@@ -12,6 +12,8 @@ public class Dictionary {
         treeData.put("bed", "cai giuong");
     }
 
+
+
     public Map<String, String> getTreeData() {
         return treeData;
     }
