@@ -1,6 +1,7 @@
 package com.codegym.configuration;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -27,6 +28,9 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
         filter.setEncoding("UTF-8");
         filter.setForceEncoding(true);
-        return new Filter[] { filter };
+
+        HiddenHttpMethodFilter httpMethodFilter = new HiddenHttpMethodFilter();
+
+        return new Filter[] { filter, httpMethodFilter };
     }
 }
